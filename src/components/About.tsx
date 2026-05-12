@@ -46,14 +46,21 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="grain section-pad"
+      className="grain"
       style={{
         background: "color-mix(in srgb, var(--bg-page) 70%, var(--bg-surface))",
+        padding: "var(--section-pad)",
       }}
     >
       <div
-        className="about-grid"
-        style={{ maxWidth: 1100, margin: "0 auto" }}
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "var(--about-cols)",
+          gap: "var(--about-gap)",
+          alignItems: "center",
+        }}
       >
         {/* Portrait */}
         <div
@@ -116,7 +123,7 @@ export default function About() {
             I&apos;m a Brazilian-born creative working across motion, design, and
             illustration. For the last eight years I&apos;ve coordinated visual
             identities, animated stories, and led small studios from{" "}
-            <em>São Paulo</em>, <em>Dublin</em>, <em>Chiang Mai</em>, and now{" "}
+            <em>São Paulo</em>, <em>Dublin</em>, <em>Saraburi</em>, and now{" "}
             <em>Santiago</em>.
           </p>
 
@@ -138,7 +145,7 @@ export default function About() {
           <div className="pipe-list" style={{ fontSize: 13 }}>
             <span>São Paulo, BR</span>
             <span>Dublin, IE</span>
-            <span>Chiang Mai, TH</span>
+            <span>Saraburi, TH</span>
             <span>Santiago, CL</span>
           </div>
         </div>

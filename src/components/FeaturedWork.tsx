@@ -4,47 +4,13 @@ import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { projects } from "@/data/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
-  {
-    id: "casa",
-    title: "Casa Tropicalia",
-    client: "Brand identity",
-    year: 2024,
-    category: "Branding",
-    glyph: "Ct",
-    gradient:
-      "linear-gradient(135deg, var(--color-terra-soft) 0%, var(--color-terra) 100%)",
-  },
-  {
-    id: "sienna",
-    title: "Sienna reel",
-    client: "Motion series",
-    year: 2024,
-    category: "Motion",
-    glyph: "Sr",
-    gradient:
-      "linear-gradient(135deg, var(--color-ochre) 0%, var(--color-espresso) 100%)",
-  },
-  {
-    id: "aurora",
-    title: "Aurora Series",
-    client: "Illustration",
-    year: 2024,
-    category: "Illustration",
-    glyph: "Au",
-    gradient:
-      "linear-gradient(135deg, var(--color-terra) 0%, var(--color-espresso) 100%)",
-  },
-];
+import type { Project } from "@/data/projects";
 
-function ProjectCard({
-  project,
-}: {
-  project: (typeof projects)[number];
-}) {
+function ProjectCard({ project }: { project: Project }) {
   const [hover, setHover] = useState(false);
 
   return (
@@ -74,15 +40,33 @@ function ProjectCard({
       <div
         style={{
           position: "relative",
-          aspectRatio: "16 / 9",
+          aspectRatio: "1 / 1",
           background: project.gradient,
           display: "flex",
           alignItems: "flex-end",
           padding: 16,
+          overflow: "hidden",
         }}
       >
+        {project.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={project.image}
+            alt={project.title}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
+        )}
         <span
           style={{
+            position: "relative",
+            zIndex: 1,
             fontFamily: "var(--font-sans)",
             fontSize: 10,
             fontWeight: 600,
@@ -96,25 +80,26 @@ function ProjectCard({
         >
           {project.category}
         </span>
-        {/* Decorative glyph */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "var(--font-display)",
-            fontStyle: "italic",
-            fontWeight: 500,
-            fontSize: 72,
-            color: "rgba(250,248,245,0.22)",
-            letterSpacing: "-0.02em",
-            pointerEvents: "none",
-          }}
-        >
-          {project.glyph}
-        </div>
+        {!project.image && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "var(--font-display)",
+              fontStyle: "italic",
+              fontWeight: 500,
+              fontSize: 72,
+              color: "rgba(250,248,245,0.22)",
+              letterSpacing: "-0.02em",
+              pointerEvents: "none",
+            }}
+          >
+            {project.glyph}
+          </div>
+        )}
       </div>
 
       {/* Info */}
@@ -188,8 +173,7 @@ export default function FeaturedWork() {
     <section
       id="work"
       ref={sectionRef}
-      className="section-pad"
-      style={{ background: "var(--bg-page)" }}
+      style={{ background: "var(--bg-page)", padding: "var(--section-pad)" }}
     >
       <div style={{ maxWidth: "var(--max-content)", margin: "0 auto" }}>
         {/* Header row */}
@@ -221,7 +205,7 @@ export default function FeaturedWork() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Selected projects — 2022 to today.
+              Latest projects.
             </h2>
           </div>
           <a href="#" className="btn btn-ghost">
@@ -230,7 +214,13 @@ export default function FeaturedWork() {
         </div>
 
         {/* Cards grid */}
-        <div className="work-grid">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "var(--work-cols)",
+            gap: "var(--work-gap)",
+          }}
+        >
           {projects.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}

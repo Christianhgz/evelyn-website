@@ -90,9 +90,10 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
-body { margin: 0; background: var(--bg-page); }
+body { margin: 0; background: var(--bg-page); overflow-x: clip; }
 
 /* ── Typography helpers ───────────────────────────────────────────────────── */
 .eyebrow {
@@ -113,6 +114,33 @@ body { margin: 0; background: var(--bg-page); }
   height: 1px;
   background: var(--color-terra);
   flex-shrink: 0;
+}
+
+/* ── Social icon buttons ──────────────────────────────────────────────────── */
+.social-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1.5px solid var(--color-terra);
+  color: var(--color-terra);
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.social-icon-btn:hover {
+  background: rgba(181, 71, 42, 0.08);
+  transform: translateY(-2px);
+}
+.social-icon-btn--light {
+  border-color: var(--color-terra-soft);
+  color: var(--color-terra-soft);
+}
+.social-icon-btn--light:hover {
+  background: rgba(232, 184, 168, 0.12);
 }
 
 /* ── Buttons ──────────────────────────────────────────────────────────────── */
@@ -160,115 +188,98 @@ body { margin: 0; background: var(--bg-page); }
   color: var(--fg-2);
   letter-spacing: 0.02em;
 }
-.pipe-list > span:not(:last-child)::after {
+.pipe-list > *:not(:last-child)::after {
   content: ' | ';
   color: var(--color-terra);
   margin: 0 0.5em;
   opacity: 0.7;
 }
 
-/* ── Responsive layout ────────────────────────────────────────────────────── */
-.nav-inner {
-  height: 72px;
-  padding: 0 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.section-pad   { padding: 120px 48px; }
-.hero-pad      { padding: 40px 48px 120px; }
-.footer-pad    { padding: 80px 48px 32px; }
+/* ── Responsive layout tokens ─────────────────────────────────────────────── */
+/* Inline styles reference these vars — changing the var here changes the layout
+   at every breakpoint without touching component files. */
+:root {
+  --section-pad:   120px 48px;
+  --hero-pad:      40px 48px 120px;
+  --footer-pad:    80px 48px 32px;
+  --nav-gutter:    0 48px;
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 80px;
-  align-items: center;
-  min-height: 620px;
-}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 96px;
-  align-items: start;
-}
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-}
-.cta-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 96px;
-  align-items: center;
+  --hero-cols:         1.05fr 1fr;
+  --hero-gap:          80px;
+  --hero-min-h:        620px;
+  --hero-section-min-h: calc(100vh - 72px);
+
+  --about-cols:    1fr 1.4fr;
+  --about-gap:     96px;
+
+  --work-cols:     repeat(3, 1fr);
+  --work-gap:      28px;
+
+  --cta-cols:      1.2fr 1fr;
+  --cta-gap:       96px;
 }
 
-/* Nav desktop links */
-.nav-links        { display: flex; gap: 32px; align-items: center; }
-.nav-hamburger    { display: none; }
-/* Mobile menu (hidden by default) */
+@media (max-width: 1024px) {
+  :root {
+    --section-pad:  96px 32px;
+    --hero-pad:     32px 32px 96px;
+    --footer-pad:   64px 32px 28px;
+    --nav-gutter:   0 32px;
+    --hero-gap:     48px;
+    --about-gap:    56px;
+    --work-cols:    repeat(2, 1fr);
+    --cta-gap:      56px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-pad:  72px 20px;
+    --hero-pad:     24px 20px 72px;
+    --footer-pad:   56px 20px 24px;
+    --nav-gutter:   0 20px;
+    --hero-cols:          1fr;
+    --hero-gap:           36px;
+    --hero-min-h:         0px;
+    --hero-section-min-h: 0px;
+    --about-cols:   1fr;
+    --about-gap:    40px;
+    --work-cols:    1fr;
+    --work-gap:     20px;
+    --cta-cols:     1fr;
+    --cta-gap:      48px;
+  }
+}
+
+/* ── Hero actions + scroll cue ───────────────────────────────────────────── */
+.hero-actions  { align-items: center; }
+.hero-scroll-cue { display: flex; }
+
+/* ── Nav responsive ───────────────────────────────────────────────────────── */
+.nav-links     { display: flex; gap: 32px; align-items: center; }
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--fg-1); align-items: center; justify-content: center; }
+
 .nav-mobile-menu {
   display: none;
   position: fixed;
-  inset: 72px 0 0 0;
-  background: rgba(240,237,232,0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  inset: 0;
+  background: var(--color-stone);
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 40px;
-  z-index: 99;
+  z-index: 999;
 }
 .nav-mobile-menu.open { display: flex; }
 
-/* Tablet */
-@media (max-width: 1024px) {
-  .work-grid            { grid-template-columns: repeat(2, 1fr); }
-  .hero-grid            { gap: 48px; }
-  .about-grid           { gap: 56px; }
-  .cta-grid             { gap: 56px; }
-  .section-pad          { padding: 96px 32px; }
-  .hero-pad             { padding: 32px 32px 96px; }
-  .footer-pad           { padding: 64px 32px 28px; }
-  .nav-inner            { padding: 0 32px; }
-}
-
-/* Mobile */
 @media (max-width: 768px) {
-  .section-pad  { padding: 72px 20px; }
-  .hero-pad     { padding: 24px 20px 72px; }
-  .footer-pad   { padding: 56px 20px 24px; }
-  .nav-inner    { padding: 0 20px; }
-
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    min-height: auto;
-  }
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .work-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .cta-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  /* Nav: hide desktop links, show hamburger */
-  .nav-links     { display: none; }
-  .nav-hamburger { display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; padding: 4px; color: var(--fg-1); }
-
-  /* Hero: portrait shows below on mobile */
-  .hero-portrait-wrap { order: 2; max-height: 52vw; overflow: hidden; border-radius: 12px; }
-  .hero-copy-wrap     { order: 1; }
-  /* Hide the oversized arc SVG on mobile */
-  .hero-arc { display: none; }
+  .nav-links          { display: none; }
+  .nav-hamburger      { display: flex; }
+  .hero-arc           { display: none; }
+  .hero-portrait-wrap { display: none; }
+  .hero-scroll-cue     { display: none; }
+  .hero-action-divider { display: none; }
+  .hero-actions        { flex-direction: column; align-items: flex-start; gap: 24px; }
 }
 
 /* ── Grain overlay ────────────────────────────────────────────────────────── */

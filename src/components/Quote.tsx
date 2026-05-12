@@ -60,8 +60,7 @@ export default function Quote() {
   return (
     <section
       ref={sectionRef}
-      className="section-pad"
-      style={{ background: "var(--bg-page)" }}
+      style={{ background: "var(--bg-page)", padding: "var(--section-pad)" }}
     >
       <div style={{ maxWidth: 880, margin: "0 auto" }}>
         {/* Opening mark */}

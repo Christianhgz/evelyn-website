@@ -47,14 +47,20 @@ export default function CTA() {
     <section
       id="contact"
       ref={sectionRef}
-      className="section-pad"
       style={{
         background: "color-mix(in srgb, var(--bg-page) 70%, var(--bg-surface))",
+        padding: "var(--section-pad)",
       }}
     >
       <div
-        className="cta-grid"
-        style={{ maxWidth: 1100, margin: "0 auto" }}
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "var(--cta-cols)",
+          gap: "var(--cta-gap)",
+          alignItems: "start",
+        }}
       >
         {/* Left */}
         <div className="cta-left">
@@ -98,45 +104,44 @@ export default function CTA() {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 14,
+            gap: 20,
             alignItems: "flex-start",
           }}
         >
           <a
-            href="mailto:hello@evelyntomkelski.com"
+            href="mailto:evelyntomkelski@gmail.com"
             className="btn btn-primary"
             style={{ padding: "18px 28px", fontSize: 15 }}
           >
             Send a note →
           </a>
 
-          <div
+          <a
+            href="mailto:evelyntomkelski@gmail.com"
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: 12,
               letterSpacing: "0.14em",
               color: "var(--fg-2)",
               textTransform: "uppercase",
-              marginTop: 8,
+              textDecoration: "none",
             }}
           >
-            hello@evelyntomkelski.com
-          </div>
+            evelyntomkelski@gmail.com
+          </a>
 
           <div
             style={{
               height: 1,
               background: "var(--border-hairline)",
               width: 200,
-              margin: "20px 0",
             }}
           />
 
           <div className="pipe-list" style={{ fontSize: 12 }}>
-            <span>LinkedIn</span>
-            <span>Behance</span>
-            <span>Instagram</span>
-            <span>Vimeo</span>
+            <a href="https://www.linkedin.com/in/evelyntomkelski/" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>LinkedIn</a>
+            <a href="https://www.behance.net/vivitomkelski" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>Behance</a>
+            <a href="https://vimeo.com/evelyntomkelski" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>Vimeo</a>
           </div>
         </div>
       </div>

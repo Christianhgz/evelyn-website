@@ -10,7 +10,7 @@ export default function Hero() {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out", immediateRender: false } });
 
       tl.from(".hero-eyebrow", { y: 20, opacity: 0, duration: 0.6, delay: 0.3 })
         .from(".hero-name", { y: 50, opacity: 0, duration: 0.9 }, "-=0.3")
@@ -28,18 +28,22 @@ export default function Hero() {
     <section
       id="top"
       ref={containerRef}
-      className="hero-pad"
       style={{
         position: "relative",
         overflow: "hidden",
-        minHeight: "calc(100vh - 72px)",
+        padding: "var(--hero-pad)",
+        minHeight: "var(--hero-section-min-h)",
       }}
     >
       <div
-        className="hero-grid"
         style={{
           maxWidth: "var(--max-content)",
           margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "var(--hero-cols)",
+          gap: "var(--hero-gap)",
+          alignItems: "center",
+          minHeight: "var(--hero-min-h)",
           position: "relative",
         }}
       >
@@ -92,7 +96,7 @@ export default function Hero() {
               lineHeight: 1.55,
               color: "var(--fg-1)",
               maxWidth: "34ch",
-              margin: "0 0 44px",
+              margin: "0 0 24px",
             }}
           >
             Hi, I&apos;m Evelyn — I tell stories with visuals, and I mean every
@@ -100,13 +104,46 @@ export default function Hero() {
             from Chile.
           </p>
 
-          <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-            <a href="#work" className="btn btn-primary hero-cta">
-              View work →
-            </a>
-            <a href="#contact" className="btn btn-ghost hero-cta">
-              Get in touch
-            </a>
+          <div className="hero-actions" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            {/* Socials — first in DOM so they appear on top row on mobile */}
+            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            {[
+              {
+                label: "LinkedIn",
+                href: "https://www.linkedin.com/in/evelyntomkelski/",
+                d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
+              },
+              {
+                label: "Behance",
+                href: "https://www.behance.net/vivitomkelski",
+                d: "M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.202.791 1.872 1.864 1.872.914 0 1.559-.469 1.81-1.326l3.083.484zm-5.987-2.193c-.132-1.18-.785-1.843-1.75-1.843-.982 0-1.698.673-1.862 1.843h3.612zM8.949 13.049c.897-.443 1.449-1.243 1.449-2.271 0-2.127-1.647-3.278-4.31-3.278H1v12h5.281c2.908 0 4.697-1.27 4.697-3.522.001-1.385-.617-2.394-2.029-2.929zM3.797 9.272h2.609c.983 0 1.544.404 1.544 1.182 0 .834-.624 1.206-1.813 1.206H3.797V9.272zm3.129 7.528H3.797v-2.758h3.233c1.267 0 1.928.469 1.928 1.378 0 .878-.697 1.38-2.032 1.38z",
+              },
+              {
+                label: "Vimeo",
+                href: "https://vimeo.com/evelyntomkelski",
+                d: "M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197c1.185-1.044 2.351-2.084 3.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.612-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.478 4.807z",
+              },
+            ].map(({ label, href, d }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="social-icon-btn hero-cta">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path d={d} />
+                </svg>
+              </a>
+            ))}
+            </div>
+
+            {/* Divider — hidden on mobile */}
+            <div className="hero-action-divider" style={{ width: 1, height: 28, background: "var(--border-hairline)", margin: "0 4px" }} />
+
+            {/* CTA buttons — second row on mobile */}
+            <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+              <a href="#work" className="btn btn-primary hero-cta">
+                View work →
+              </a>
+              <a href="#contact" className="btn btn-ghost hero-cta">
+                Get in touch
+              </a>
+            </div>
           </div>
         </div>
 
@@ -207,7 +244,6 @@ export default function Hero() {
           bottom: 32,
           left: "50%",
           transform: "translateX(-50%)",
-          display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: 8,
