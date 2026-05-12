@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import GradientAvatar from "./GradientAvatar";
 
-gsap.registerPlugin(useGSAP);
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
