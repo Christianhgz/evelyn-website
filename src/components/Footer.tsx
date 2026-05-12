@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
@@ -17,6 +17,7 @@ export default function Footer() {
         opacity: 0,
         duration: 1,
         ease: "power3.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: footerRef.current,
           start: "top 85%",
@@ -31,6 +32,7 @@ export default function Footer() {
         stagger: 0.1,
         ease: "power3.out",
         delay: 0.2,
+        immediateRender: false,
         scrollTrigger: {
           trigger: footerRef.current,
           start: "top 80%",
@@ -44,10 +46,10 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
+      className="footer-pad"
       style={{
         background: "var(--color-espresso)",
         color: "color-mix(in srgb, var(--color-stone) 90%, var(--color-terra-soft))",
-        padding: "80px 48px 32px",
         position: "relative",
         isolation: "isolate",
       }}

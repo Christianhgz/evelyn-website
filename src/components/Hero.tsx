@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import GradientAvatar from "./GradientAvatar";
 
 
 export default function Hero() {
@@ -29,27 +28,23 @@ export default function Hero() {
     <section
       id="top"
       ref={containerRef}
+      className="hero-pad"
       style={{
         position: "relative",
         overflow: "hidden",
-        padding: "40px 48px 120px",
         minHeight: "calc(100vh - 72px)",
       }}
     >
       <div
+        className="hero-grid"
         style={{
           maxWidth: "var(--max-content)",
           margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "1.05fr 1fr",
-          gap: 80,
-          alignItems: "center",
-          minHeight: 620,
           position: "relative",
         }}
       >
         {/* ── Left: copy ──────────────────────────────────────────── */}
-        <div style={{ position: "relative", zIndex: 3 }}>
+        <div className="hero-copy-wrap" style={{ position: "relative", zIndex: 3 }}>
           <div className="eyebrow hero-eyebrow" style={{ marginBottom: 32 }}>
             Portfolio · 2026
           </div>
@@ -117,7 +112,7 @@ export default function Hero() {
 
         {/* ── Right: arc + portrait ────────────────────────────────── */}
         <div
-          className="hero-portrait"
+          className="hero-portrait hero-portrait-wrap"
           style={{
             position: "relative",
             aspectRatio: "1 / 1.05",
@@ -125,8 +120,9 @@ export default function Hero() {
             zIndex: 1,
           }}
         >
-          {/* Terra arc */}
+          {/* Terra arc — hidden on mobile via .hero-arc */}
           <svg
+            className="hero-arc"
             viewBox="0 0 600 600"
             style={{
               position: "absolute",
@@ -170,7 +166,18 @@ export default function Hero() {
               zIndex: 1,
             }}
           >
-            <GradientAvatar />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/icon.png"
+              alt="Evelyn Tomkelski"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center top",
+                display: "block",
+              }}
+            />
           </div>
 
           {/* Location caption */}

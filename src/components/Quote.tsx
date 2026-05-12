@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Quote() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -17,6 +17,7 @@ export default function Quote() {
         opacity: 0,
         duration: 0.6,
         ease: "power3.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 80%",
@@ -30,6 +31,7 @@ export default function Quote() {
         duration: 0.9,
         ease: "power3.out",
         delay: 0.1,
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 78%",
@@ -44,6 +46,7 @@ export default function Quote() {
         stagger: 0.1,
         ease: "power3.out",
         delay: 0.2,
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 75%",
@@ -57,7 +60,8 @@ export default function Quote() {
   return (
     <section
       ref={sectionRef}
-      style={{ padding: "120px 48px", background: "var(--bg-page)" }}
+      className="section-pad"
+      style={{ background: "var(--bg-page)" }}
     >
       <div style={{ maxWidth: 880, margin: "0 auto" }}>
         {/* Opening mark */}

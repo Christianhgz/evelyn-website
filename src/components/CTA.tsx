@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CTA() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -17,6 +17,7 @@ export default function CTA() {
         opacity: 0,
         duration: 0.9,
         ease: "power3.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 75%",
@@ -31,6 +32,7 @@ export default function CTA() {
         stagger: 0.1,
         ease: "power3.out",
         delay: 0.1,
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 72%",
@@ -45,20 +47,14 @@ export default function CTA() {
     <section
       id="contact"
       ref={sectionRef}
+      className="section-pad"
       style={{
-        padding: "120px 48px",
         background: "color-mix(in srgb, var(--bg-page) 70%, var(--bg-surface))",
       }}
     >
       <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "1.2fr 1fr",
-          gap: 96,
-          alignItems: "center",
-        }}
+        className="cta-grid"
+        style={{ maxWidth: 1100, margin: "0 auto" }}
       >
         {/* Left */}
         <div className="cta-left">

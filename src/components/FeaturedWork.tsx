@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -159,6 +159,7 @@ export default function FeaturedWork() {
         opacity: 0,
         duration: 0.7,
         ease: "power3.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 80%",
@@ -172,9 +173,10 @@ export default function FeaturedWork() {
         duration: 0.7,
         ease: "power3.out",
         stagger: 0.15,
+        immediateRender: false,
         scrollTrigger: {
-          trigger: ".project-card",
-          start: "top 85%",
+          trigger: sectionRef.current,
+          start: "top 65%",
           once: true,
         },
       });
@@ -186,7 +188,8 @@ export default function FeaturedWork() {
     <section
       id="work"
       ref={sectionRef}
-      style={{ padding: "120px 48px", background: "var(--bg-page)" }}
+      className="section-pad"
+      style={{ background: "var(--bg-page)" }}
     >
       <div style={{ maxWidth: "var(--max-content)", margin: "0 auto" }}>
         {/* Header row */}
@@ -227,13 +230,7 @@ export default function FeaturedWork() {
         </div>
 
         {/* Cards grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 28,
-          }}
-        >
+        <div className="work-grid">
           {projects.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}

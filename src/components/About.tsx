@@ -4,9 +4,8 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import GradientAvatar from "./GradientAvatar";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -18,6 +17,7 @@ export default function About() {
         opacity: 0,
         duration: 1,
         ease: "power3.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 75%",
@@ -31,6 +31,7 @@ export default function About() {
         duration: 0.7,
         ease: "power3.out",
         stagger: 0.12,
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 70%",
@@ -45,26 +46,20 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="grain"
+      className="grain section-pad"
       style={{
         background: "color-mix(in srgb, var(--bg-page) 70%, var(--bg-surface))",
-        padding: "120px 48px",
       }}
     >
       <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "1fr 1.4fr",
-          gap: 96,
-          alignItems: "start",
-        }}
+        className="about-grid"
+        style={{ maxWidth: 1100, margin: "0 auto" }}
       >
         {/* Portrait */}
         <div
           className="about-image"
           style={{
+            width: "100%",
             aspectRatio: "4 / 5",
             borderRadius: 12,
             overflow: "hidden",
@@ -72,7 +67,18 @@ export default function About() {
             background: "var(--color-espresso)",
           }}
         >
-          <GradientAvatar />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/evelyn-hero.png"
+            alt="Evelyn Tomkelski"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center 20%",
+              display: "block",
+            }}
+          />
         </div>
 
         {/* Text */}
